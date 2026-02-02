@@ -22,16 +22,23 @@ public class ProduitController {
 
     @GetMapping("/produits")
     public String listerProduits(
-            @RequestParam(value ="p", defaultValue = "0") int page,
-            @RequestParam(value ="s", defaultValue = "5") int size,
+            @RequestParam(value = "p", defaultValue = "0") int page,
+            @RequestParam(value = "s", defaultValue = "5") int size,
+            @RequestParam(value = "mc", defaultValue = "") String motCle,
             Model model) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Produit> pageProduits = this.repo.findAll(pageable);
-        
-    
+
+        Page<Produit> pageProduits;
+        if (motCle.length() > 0) {
+            pageProduits = this.repo.rechercher("%" + motCle + "%", pageable);
+        } else {
+            pageProduits = this.repo.findAll(pageable);
+        }
+
         model.addAttribute("produits", pageProduits.getContent());
         model.addAttribute("page", pageProduits);
+        model.addAttribute("motCle", motCle);
         return "produits";
     }
 }

@@ -24,6 +24,16 @@
                 </div>
                 <!--- ajout "eventuel" hidden "p" pour conserver la page-->
             </form>
+
+            <form th:action="@{/produits}" method="GET">
+                <input type="hidden" name="s" th:value="${page.size}" />
+                <div class="input-group">
+                    <input type="text" name="mc" id="mc" th:value="${motCle}" class="form-control">
+                    <button class="btn btn-primary" type="submit">Rechercher</button>
+                </div>
+
+        
+            </form>
         </div>
         <table class="table table-hover">
             <thead>
@@ -49,14 +59,14 @@
         <div>
             <ul class="pagination pagination-sm">
                 <li class="page-item" th:classappend="${page.number==0} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{/produits(p=${page.number-1}, s=${page.size})}">&laquo;</a>
+                    <a class="page-link" th:href="@{/produits(p=${page.number-1}, s=${page.size}, mc=${motCle})}">&laquo;</a>
                 </li>
                 <li class="page-item active" th:classappend="${i==page.number+1} ? 'active' : ''"
                     th:each="i : ${#numbers.sequence(1,page.totalPages)}">
-                    <a class="page-link" th:href="@{/produits(p=${i-1}, s=${page.size})}" th:text="${i}"></a>
+                    <a class="page-link" th:href="@{/produits(p=${i-1}, s=${page.size}, mc=${motCle})}" th:text="${i}"></a>
                 </li>
                 <li class="page-item" th:classappend="${page.last} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{/produits(p=${page.number+1}, s=${page.size})}">&raquo;</a>
+                    <a class="page-link" th:href="@{/produits(p=${page.number+1}, s=${page.size}, mc=${motCle})}">&raquo;</a>
                 </li>
             </ul>
         </div>

@@ -11,6 +11,20 @@
     <nav th:replace="~{_layout :: menu}"></nav>
     <div class="container">
         <h1>En boutique aujourd'hui <i class="fa-solid fa-kiwi-bird fa-spin-pulse"></i></h1>
+
+        <div>
+            <form th:action="@{/produits}" method="GET">
+                <div class="form-group">
+                    <label for="size">Produits par page :</label>
+                    <select name="s" id="size" class="form-control" onchange="this.form.submit()">
+                        <option value="5" th:selected="${page.size==5}">5</option>
+                        <option value="10" th:selected="${page.size==10}">10</option>
+                        <option value="20" th:selected="${page.size==20}">20</option>
+                    </select>
+                </div>
+                <!--- ajout "eventuel" hidden "p" pour conserver la page-->
+            </form>
+        </div>
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -32,6 +46,20 @@
                 </tr>
             </tbody>
         </table>
+        <div>
+            <ul class="pagination pagination-sm">
+                <li class="page-item" th:classappend="${page.number==0} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/produits(p=${page.number-1}, s=${page.size})}">&laquo;</a>
+                </li>
+                <li class="page-item active" th:classappend="${i==page.number+1} ? 'active' : ''"
+                    th:each="i : ${#numbers.sequence(1,page.totalPages)}">
+                    <a class="page-link" th:href="@{/produits(p=${i-1}, s=${page.size})}" th:text="${i}"></a>
+                </li>
+                <li class="page-item" th:classappend="${page.last} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{/produits(p=${page.number+1}, s=${page.size})}">&raquo;</a>
+                </li>
+            </ul>
+        </div>
     </div>
 </body>
 

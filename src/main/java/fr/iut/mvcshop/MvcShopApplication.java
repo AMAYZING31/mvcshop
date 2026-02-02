@@ -19,7 +19,7 @@ public class MvcShopApplication {
 	@Bean
 	CommandLineRunner initBDD(ProduitRepository repo) {
 		return args -> {
-			repo.deleteAll();
+			// repo.deleteAll();
 			// repo.save( new Produit("Trippi Troppi",20,10));
 			// repo.save( new Produit("Pipi Kiwi",10,100));
 			// repo.save( new Produit("Bombardino Crocodilo",100,10));

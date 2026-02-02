@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="~{_layout :: header( ~{::title}, _, _ )}">
+<head th:replace="~{_layout :: header( ~{::title}, _, ~{::script} )}">
 
     <title>Accueil PK</title>
+    <script>
+        function confDelProd(e){
+            if(!confirm('Voulez-vous vraiment supprimer ce pauvre produit ?')){
+                e.preventDefault();
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -51,7 +58,8 @@
                     <td th:text="${p.quantite<=0 ? 'non disponible' : p.quantite}"></td>
                     <td>
                         <a href="#" class="btn btn-primary"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></a>
+                        <a href="#" class="btn btn-danger" onclick="confDelProd(event)"
+                        th:href="@{/produitDelete(id=${p.id}, p=${page.number}, s=${page.size}, mc=${motCle})}"><i class="fa-regular fa-trash-can"></i></a>
                     </td>
                 </tr>
             </tbody>

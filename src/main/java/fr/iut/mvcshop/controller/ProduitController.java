@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import fr.iut.mvcshop.model.Produit;
 import fr.iut.mvcshop.repository.ProduitRepository;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class ProduitController {
@@ -41,4 +45,16 @@ public class ProduitController {
         model.addAttribute("motCle", motCle);
         return "produits";
     }
+
+    @RequestMapping(value="/produitDelete", method=RequestMethod.GET)
+    public String supprimerProduit(Long id, int p, int s, String mc,RedirectAttributes redirectAttributes) {
+        // TODO on pourrait verifier si le produit existe avant
+        this.repo.deleteById(id);
+
+        redirectAttributes.addAttribute("p",p);
+        redirectAttributes.addAttribute("s",s);
+        redirectAttributes.addAttribute("mc",mc);
+        return "redirect:/produits";
+    }
+    
 }

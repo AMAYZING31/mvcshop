@@ -90,12 +90,12 @@ public class ProduitController {
     @PostMapping("/produitSave")
     public String sauverProduit(@Valid Produit produit,
             BindingResult bindingResult, int p, int s, String mc,
-            RedirectAttributes redirectAttributes) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addAttribute("p", p);
-            redirectAttributes.addAttribute("s", s);
-            redirectAttributes.addAttribute("mc", mc);
+            model.addAttribute("p", p);
+            model.addAttribute("s", s);
+            model.addAttribute("mc", mc);
             return "produitform";
         }
 
